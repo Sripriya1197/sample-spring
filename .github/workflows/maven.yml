@@ -27,7 +27,7 @@ jobs:
 
       - name: Build application
         run: mvn clean package
-        working-directory: ./sample-ecs/demo
+        working-directory: sample-ecs/demo
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
