@@ -1,11 +1,10 @@
-
 name: CI - Build and Push Docker Image To ECR
 
 on:
   push:
-    branches:     
-      - master  
-   
+    branches:
+      - master
+
 jobs:
   build-and-push:
     name: Build and Push Docker Image
@@ -15,18 +14,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 17 and Maven
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Set up Maven
-        uses: actions/setup-java@v3
-        with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: 'maven
+          cache: 'maven'
 
       - name: Build application
         run: mvn clean package
