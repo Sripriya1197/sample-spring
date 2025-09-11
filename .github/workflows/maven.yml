@@ -26,8 +26,9 @@ jobs:
           sudo apt install -y maven
 
       - name: Build application
-        run: mvn clean package
-        working-directory: sample-ecs/demo
+        run: ./mvnw clean package
+        working-directory: Sample-ecs/demo
+
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
