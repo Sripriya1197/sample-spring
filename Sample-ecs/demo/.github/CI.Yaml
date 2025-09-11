@@ -1,5 +1,5 @@
 
-name: CI - Build and Push Docker Image
+name: CI - Build and Push Docker Image To ECR
 
 on:
   push:
