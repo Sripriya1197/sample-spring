@@ -50,7 +50,7 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag sample-spring:latest ${{ secrets.ECR_REPO_URI }}
+          docker tag sample-spring:latest ${{ secrets.ECR_REPO_URI }}  
 
       - name: Push Docker image to ECR
         run: |
