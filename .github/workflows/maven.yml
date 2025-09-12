@@ -46,9 +46,10 @@ jobs:
 
       - name: Build Docker image
         working-directory: Sample-ecs/demo
-        run: sudo docker build -t sample-spring:latest -f dockerfile .
+        run:  sudo docker build -t ${{ secrets.ECR_REPO_URI }}:latest -f dockerfile .
 
       - name: Push Docker image to ECR
         working-directory: Sample-ecs/demo
         run: sudo docker push ${{ secrets.ECR_REPO_URI }}:latest
+       
          
