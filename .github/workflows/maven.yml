@@ -3,7 +3,7 @@ name: CI - Build and Push Docker Image To ECR
 on:
   push:
     branches:  
-      - master
+      - master 
    
 jobs:
   build-and-push:
