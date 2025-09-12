@@ -50,5 +50,5 @@ jobs:
 
       - name: Push Docker image to ECR
         working-directory: Sample-ecs/demo
-        run: sudo docker push ${{ secrets.ECR_REPO_URI }}>:latest
+        run: sudo docker push ${{ secrets.ECR_REPO_URI }}:latest
          
