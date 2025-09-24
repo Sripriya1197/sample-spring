@@ -1,14 +1,14 @@
 name: CI - Build and Push Docker Image To ECR
 
 on:
-  push:
+  push:  
     branches:  
       - master  
    
 jobs:
   build-and-push:
     name: Build and Push Docker Image
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -42,7 +42,8 @@ jobs:
 
       - name: Log in to Amazon ECR
         run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_URI }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 696659996381.dkr.ecr.us-east-1.amazonaws.com
+
 
       - name: Build Docker image
         working-directory: Sample-ecs/demo
@@ -50,6 +51,6 @@ jobs:
 
       - name: Push Docker image to ECR
         working-directory: Sample-ecs/demo
-        run: sudo docker push ${{ secrets.ECR_REPO_URI }}:latest
+        run:  docker push ${{ secrets.ECR_REPO_URI }}:latest
        
          
