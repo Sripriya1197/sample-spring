@@ -43,14 +43,13 @@ jobs:
       - name: Log in to Amazon ECR
         run: |
           aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 696659996381.dkr.ecr.ap-south-1.amazonaws.com
-
-
+          
       - name: Build Docker image
         working-directory: Sample-ecs/demo
-        run: docker build -t ${{ secrets.ECR_REPO_URI }}:latest -f dockerfile .
+        run: docker build -t 999804595543.dkr.ecr.ap-south-1.amazonaws.com/sample-spring:latest -f dockerfile .
 
       - name: Push Docker image to ECR
         working-directory: Sample-ecs/demo
-        run: docker push ${{ secrets.ECR_REPO_URI }}:latest
-       
+        run: docker push 999804595543.dkr.ecr.ap-south-1.amazonaws.com/sample-spring:latest
+
          
