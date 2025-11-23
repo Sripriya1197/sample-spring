@@ -5,7 +5,7 @@ on:
     workflows: ["CI - Build and Push Docker Image"]
     types:
       - completed
-
+  
 jobs:
   deploy:
     name: Deploy to ECS
