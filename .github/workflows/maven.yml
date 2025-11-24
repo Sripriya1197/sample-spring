@@ -1,10 +1,61 @@
-- name: Log in to Amazon ECR
-  run: |
-    aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 999804595543.dkr.ecr.ap-south-1.amazonaws.com
+name: CI - Build and Push Docker Image To ECR
 
-- name: Build Docker image
-  working-directory: Sample-ecs/demo
-  run: docker build -t 999804595543.dkr.ecr.ap-south-1.amazonaws.com/sample-spring:latest -f Dockerfile .
+on:
+  push:
+    branches:
+      - master
 
-- name: Push Docker image to ECR
-  run: docker push 999804595543.dkr.ecr.ap-south-1.amazonaws.com/sample-spring:latest
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Set up Java
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3️⃣ Install Maven
+      - name: Install Maven
+        run: |
+          sudo apt update
+          sudo apt install -y maven
+
+      # 4️⃣ Make Maven wrapper executable
+      - name: Make Maven wrapper executable
+        run: chmod +x Sample-ecs/demo/mvnw
+
+      # 5️⃣ Build Java application
+      - name: Build application
+        run: ./mvnw clean package
+        working-directory: Sample-ecs/demo
+
+      # 6️⃣ Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ap-south-1
+
+      # 7️⃣ Log in to Amazon ECR
+      - name: Log in to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 999804595543.dkr.ecr.ap-south-1.amazonaws.com
+
+      # 8️⃣ Build Docker image
+      - name: Build Docker image
+        working-directory: Sample-ecs/demo
+        run: docker build -t 999804595543.dkr.ecr.ap-south-1.amazonaws.com/sample-spring:latest -f Dockerfile .
+
+      # 9️⃣ Push Docker image to ECR
+      - name: Push Docker image to ECR
+        run: docker push 999804595543.dkr.ecr.ap-south-1.amazonaws.com/sample-spring:latest
